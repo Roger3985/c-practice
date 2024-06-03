@@ -1,72 +1,80 @@
-// Tree traversal in C
-
 #include <stdio.h>
 #include <stdlib.h>
+#define Node_Num 7		//定義二元數節點的總數
 
-struct node {
-  int item;
-  struct node* left;
-  struct node* right;
-};
+void CreateBinaryTree(int*, int);	//建立二元樹
+void Preorder(int);		//前序追蹤
+void Inorder(int);		//中序追蹤	
+void Postorder(int);		//後序追蹤
 
-// Inorder traversal
-void inorderTraversal(struct node* root) {
-  if (root == NULL) return;
-  inorderTraversal(root->left);
-  printf("%d ->", root->item);
-  inorderTraversal(root->right);
-}
-
-// Preorder traversal
-void preorderTraversal(struct node* root) {
-  if (root == NULL) return;
-  printf("%d ->", root->item);
-  preorderTraversal(root->left);
-  preorderTraversal(root->right);
-}
-
-// Postorder traversal
-void postorderTraversal(struct node* root) {
-  if (root == NULL) return;
-  postorderTraversal(root->left);
-  postorderTraversal(root->right);
-  printf("%d ->", root->item);
-}
-
-// Create a new Node
-struct node* createNode(value) {
-  struct node* newNode = malloc(sizeof(struct node));
-  newNode->item = value;
-  newNode->left = NULL;
-  newNode->right = NULL;
-
-  return newNode;
-}
-
-// Insert on the left of the node
-struct node* insertLeft(struct node* root, int value) {
-  root->left = createNode(value);
-  return root->left;
-}
-
-// Insert on the right of the node
-struct node* insertRight(struct node* root, int value) {
-  root->right = createNode(value);
-  return root->right;
-}
+int data[Node_Num];		//暫存資料的陣列宣告
+int BinaryTree[Node_Num];	//二元數的陣列宣告
 
 int main() {
-  struct node* root = createNode(1);
-  insertLeft(root, 2);
-  insertRight(root, 3);
-  insertLeft(root->left, 4);
+  
+	for(int i = 0; i < Node_Num; i++){
+		data[i] = 1 + (rand()%16);
+	}
+    
+	CreateBinaryTree(data, Node_Num);	
 
-  printf("Inorder traversal \n");
-  inorderTraversal(root);
+	printf("二元樹前序追蹤的結果：\n");
+ 	Preorder(1);
+	printf("\n\n");
 
-  printf("\nPreorder traversal \n");
-  preorderTraversal(root);
+	printf("二元樹中序追蹤的結果：\n");
+    	Inorder(1);
+	printf("\n\n");
 
-  printf("\nPostorder traversal \n");
-  postorderTraversal(root);
+	printf("二元樹後序追蹤的結果：\n");
+	Postorder(1);
+	printf("\n\n");
+
+	return 0;
+}
+
+void CreateBinaryTree(int data[], int n) {   
+	int node=1;
+	for (int i=0; i<n; i++) {
+		BinaryTree[node]=data[i];
+
+		if ( i==0 )
+			printf( "存入二元樹陣列的內容：\n%d ", BinaryTree[node] );
+		else if ( i > 0 && i < n-1 )
+			printf( "%d ", BinaryTree[node] );
+		else
+			printf( "%d \n\n", BinaryTree[node] );
+
+		node=node + 1;
+	}
+}
+
+void Preorder(int node) {  
+	if (BinaryTree[node] != NULL) {
+		if (BinaryTree[node] != NULL) {
+			printf("%d ",BinaryTree[node]);	//列印樹根
+		}
+		Preorder(2*node);	//遞迴左子樹
+		Preorder(2*node+1);	//遞迴右子樹
+	}
+}
+
+void Inorder(int node) { 
+	if (BinaryTree[node] != NULL) {
+		Inorder(2*node);	//遞迴左子樹
+		if (BinaryTree[node] != NULL) {  
+			printf("%d ", BinaryTree[node]);	//列印樹根
+		}
+		Inorder(2*node+1);	//遞迴右子樹             
+	}
+}
+
+void Postorder(int node) { 
+	if (BinaryTree[node] != NULL) {
+		Postorder(2*node);		//遞迴左子樹
+		Postorder(2*node+1);		//遞迴右子樹
+		if (BinaryTree[node] != NULL) {  
+			printf("%d ",BinaryTree[node]);	//列印樹根
+		}
+	}
 }
