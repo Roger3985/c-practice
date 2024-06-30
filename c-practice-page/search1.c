@@ -10,6 +10,18 @@ int Sequential_Search(int *a, int n, int key) {
     return 0;
 }
 
+int Sequential_Search2(int *a, int n, int key) 
+{
+    int i;
+    a[0] = key;
+    i = n;
+    while (a[i] != key) 
+    {
+        i--;
+    }
+    return i;
+}
+
 /* 循序查詢，a為陣列，n為要查詢的陣列個數，key為要查詢的關鍵字 */
 int main(int argc, char const *argv[]) {
     // Sample array and key for demonstration
